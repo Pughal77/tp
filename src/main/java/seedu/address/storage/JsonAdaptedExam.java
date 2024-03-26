@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.exam.Exam;
 import seedu.address.model.person.Score;
@@ -45,6 +44,12 @@ class JsonAdaptedExam {
         if (!Exam.isValidName(name)) {
             throw new IllegalValueException(Exam.MESSAGE_CONSTRAINTS);
         }
-        return new Exam(name, new Score(Integer.parseInt(maxScore)));
+        Score score;
+        try {
+            score = new Score(Integer.parseInt(maxScore));
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(Score.MESSAGE_CONSTRAINTS);
+        }
+        return new Exam(name, score);
     }
 }
