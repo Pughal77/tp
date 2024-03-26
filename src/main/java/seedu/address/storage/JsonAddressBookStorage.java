@@ -23,17 +23,32 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
     private Path filePath;
 
-    public JsonAddressBookStorage(Path filePath) {
+    private ExamBookStorage examBookStorage;
+
+    public JsonAddressBookStorage(Path filePath, Path filePathForExams) {
         this.filePath = filePath;
+        this.examBookStorage = new JsonExamBookStorage(filePathForExams);
     }
 
     public Path getAddressBookFilePath() {
         return filePath;
     }
 
+    public ExamBookStorage getExamBookStorage() {
+        return examBookStorage;
+    }
+
+    public Path getExamBookfilePath() {
+        return examBookStorage.getExamBookFilePath();
+    }
+
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataLoadingException {
         return readAddressBook(filePath);
+    }
+
+    public Optional<ReadOnlyAddressBook> readExamBook() throws DataLoadingException {
+        return examBookStorage.readExamBook();
     }
 
     /**
@@ -62,15 +77,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
-        saveExamBook(addressBook, filePath);
-    }
-
-    private void saveExamBook(ReadOnlyAddressBook addressBook, Path filePath) {
-        requireNonNull(addressBook);
-        requireNonNull(filePath);
-
-        FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableExamBook(addressBook), filePath);
+        examBookStorage.saveExamBook(addressBook);
     }
 
     /**

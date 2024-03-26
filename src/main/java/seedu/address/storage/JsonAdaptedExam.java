@@ -14,7 +14,7 @@ import seedu.address.model.tag.Tag;
 class JsonAdaptedExam {
 
     private final String examName;
-    private final Score maxScore;
+    private final Score maxScore = new Score(0);
 
     /**
      * Constructs a {@code JsonAdaptedExam} with the given {@code examName}.

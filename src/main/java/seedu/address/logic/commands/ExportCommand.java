@@ -42,6 +42,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_CREATE_CSV_DIRECTORY_FAILURE = "Could not create directory for CSV file.";
 
     private Path filteredJsonFilePath = Paths.get("data", "filteredaddressbook.json");
+    private Path examBookJsonFilePath = Paths.get("data", "examBook.json");
     private String csvFilePath = "./addressbookdata/avengersassemble.csv";
 
     /**
@@ -220,7 +221,7 @@ public class ExportCommand extends Command {
             AddressBook filteredPersonAddressBook = new AddressBook();
             addToAddressBook(filteredPersonAddressBook, filteredPersonObservableList);
 
-            JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filteredJsonFilePath);
+            JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filteredJsonFilePath, examBookJsonFilePath);
             writeToJsonFile(jsonAddressBookStorage, filteredPersonAddressBook);
 
             File jsonFile = filteredJsonFilePath.toFile();

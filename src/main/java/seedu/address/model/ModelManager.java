@@ -196,7 +196,7 @@ public class ModelManager implements Model {
     }
 
     /**
-     * Returns the a view of the selected exam. (For updating UI purposes)
+     * Returns a view of the selected exam. (For updating UI purposes)
      */
     @Override
     public ObservableValue<Exam> getSelectedExam() {
