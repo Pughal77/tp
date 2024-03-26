@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.exam.Exam;
 import seedu.address.model.person.Person;
 
 /**
@@ -41,11 +42,12 @@ class JsonSerializableAddressBook {
     }
 
     /**
-     * Converts this address book into the model's {@code AddressBook} object.
+     * Converts this address book into the model's {@code AddressBook} object. Only able to be
+     * converted to model type if exams are provided. If no exams are provided, an empty list shoudl be added
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public AddressBook toModelType() throws IllegalValueException {
+    public AddressBook toModelType(List<Exam> exams) throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
@@ -54,6 +56,7 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+        addressBook.setExams(exams);
         return addressBook;
     }
 
